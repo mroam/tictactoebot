@@ -5,3 +5,5 @@ This github repository contains a "www.BlueJ.org" Java program that plays 4x4x4 
 The AI jumps at opportunities to win and to block the human from winning, and we hope to improve the AI so that it, like Alpha Go, learns from projected games (Monte Carlo) and from previous games.
 
 There is more information at our website https://sites.google.com/a/saintannsny.org/tictactoebot/home
+
+I wonder whether we'll be able to make the Java Applet playable online? I started building it twenty years ago and it needs a "Swing" GUI update...
