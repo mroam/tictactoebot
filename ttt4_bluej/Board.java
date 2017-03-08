@@ -4,6 +4,7 @@ import java.awt.event.*;
 
 /**
  * Contains (keeps track of) 4 boards of 4x4 grids
+ * "chooseMove( )" , below, has the code for computer deciding how to respond to a move.
  * 
  * @author Mike Roam
  * @version rev. 6 Dec 2004, annotated & reformated 2016 oct 22
@@ -273,7 +274,7 @@ class Board extends Canvas {
     * not be the BEST: some other win might win in two directions at once! 
     * Should rank and compare the wins (or all possible moves).
     */
-     CellLoc chooseMove() {
+     CellLoc chooseMove( ) {
         CellLoc theNewMove = null;
         /* first check where computer can win (will be null if can't win right now) */
         if ( (theNewMove = canWin( /* computer is o */ Cell.O )) == null ) {
@@ -281,6 +282,7 @@ class Board extends Canvas {
             can't win right now) */
             if ( (theNewMove = canWin( /* human is x */ Cell.X )) == null ) {
                 /* Try to turn some 2's into 3s... */
+                
                 if ( (theNewMove = canImprove( Cell.O )) == null ) {
                     /* try to stop the human from turning 2's into 3's.. */
                     if ( (theNewMove = canImprove( Cell.X )) == null ) {
@@ -290,7 +292,7 @@ class Board extends Canvas {
             }
         }
         return theNewMove;
-    } // chooseMove()
+    } // chooseMove( )
 
 
     /**

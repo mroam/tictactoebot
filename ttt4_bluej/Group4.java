@@ -36,7 +36,11 @@ class Group4 extends Object{
 		public  String toString() {
 			StringBuffer myStr = new StringBuffer( "{" );
 			for ( int i = 0; i < 4; ++i ) {
-				myStr.append( theData[i].toString() );
+			    if (theData[i] == null) {
+			        myStr.append( "_" );
+			    } else {
+				    myStr.append( theData[i].toString() );
+				}
 				if ( i < 3 ) {
 					myStr.append( "," );
 				} else {
