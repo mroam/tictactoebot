@@ -27,10 +27,10 @@ import javax.swing.*;  // provides JApplet
 */
 class Group4CellsMaker extends Object {
 
-     Group4 currGroup = null; // set up in constructor or die  new Group4();
+     Group4 currGroup = null; // set up in constructor or die  new Group4( );
      Board myBoard = null; // set up in constructor or die
      
-     boolean hasMoreGroups = true;
+     boolean hasMoreGroups = true;  // should be private so can't be changed
 
      int groupNum = /* double check */ 0;
 
@@ -52,9 +52,10 @@ class Group4CellsMaker extends Object {
     public final  int X_Y3Z_ = 7;  // means y counts DOWN 3..0 while x and z count 0..3
     public final  int X3Y3Z_ = 8;  // x and y count down 3..0, while z counts 0..3
     public final  int X3Y_Z_ = 9;  // x counts down 3..0, y & z count 0..3
-    //  ^ his is the diag that is missing
+    //  ^ this is the diag that is missing
 
-    public final  int NONE = 10;
+    public final  int ALL_DONE = 10;  // turns true when we make the last one
+    public final  int NONE = 11;   // should turn true after we consume the last one
 
     /* initially Z, will be changed by makeNext.. as we go */
     int loopingThrough = Z;
@@ -69,7 +70,7 @@ class Group4CellsMaker extends Object {
     * default constructor
     */
     public Group4CellsMaker( Board newMyBoard, TicTacTApplet myNewApplet ) {
-        super();
+        super( );
         myApplet = myNewApplet;
         myBoard = newMyBoard;
         currGroup =  new Group4( myBoard );
@@ -79,11 +80,11 @@ class Group4CellsMaker extends Object {
             currGroup.theData[1] = new CellLoc( 0, 0, 1 );
             currGroup.theData[2] = new CellLoc( 0, 0, 2 );
             currGroup.theData[3] = new CellLoc( 0, 0, 3 );
-            //Debug.debugPrtLn( "after group4CellsMaker constructor, currGroup is " + this.toString() );
+            //Debug.debugPrtLn( "after group4CellsMaker constructor, currGroup is " + this.toString( ) );
         } catch( BadLocExc bleh ) {
             System.out.println( "bad coordinates in Group4CellsMaker( ):" + bleh );
         }
-        /* making sure to initialize all flags */ startOver();
+        /* making sure to initialize all flags */ startOver( );
     } // default constructor
 
     
@@ -99,44 +100,44 @@ class Group4CellsMaker extends Object {
             /* these routines adjust the currGroup, which got all 'new'ed in init( ). */
             if ( hasMoreNonDiag ) {
                 /* return */
-                makeNextNonDiagGroup();
+                makeNextNonDiagGroup( );
             } else {
                 if ( hasMorePlaneDiag ) {
                     /* return */
-                    makeNextPlaneDiagGroup();
+                    makeNextPlaneDiagGroup( );
                 } else {
                     /* return */
                     Debug.debug = true;
-                    makeNextDiagDiagGroup();
-                    Debug.debugPrtLn( currGroup.toString() );
+                    makeNextDiagDiagGroup( );
+                    Debug.debugPrtLn( currGroup.toString( ) );
                 }
             }
             groupNum++;
             return currGroup;
         }
-    } // makeNextGroup()
+    } // makeNextGroup( )
 
 
-    public  void startOver() {
+    public  void startOver( ) {
         loopingThrough = Z;
         hasMoreGroups = true;
         hasMoreNonDiag = true;
         hasMorePlaneDiag = true;
         firstDiag = true;
         groupNum = /* double checking */ 0;
-    } // startOver()
+    } // startOver( )
 
 
-    public  String toString() {
-        return Integer.toString( groupNum ) + ": " + currGroup.toString();
-    } // toString()
+    public  String toString( ) {
+        return Integer.toString( groupNum ) + ": " + currGroup.toString( );
+    } // toString( )
 
 
 
     /**
      * Not doing diagonals, so can loop through x,y, or z; holding 2 of them steady 
      */
-    private  void makeNextNonDiagGroup() {
+    private  void makeNextNonDiagGroup( ) {
         if ( loopingThrough == Z ) {
             /* the current group will be points (1,1,1) (1,1,2) (1,1,3) 
             (1,1,4) when x and y are 1 */
@@ -157,7 +158,7 @@ class Group4CellsMaker extends Object {
                     z = 0;
                 }
             }
-            //Debug.debugPrtLn( "after group4CellsMaker does a Z, currGroup is " + this.toString() );
+            //Debug.debugPrtLn( "after group4CellsMaker does a Z, currGroup is " + this.toString( ) );
         } else {
             if ( loopingThrough == Y ) {
                 for ( int newY = 0; newY < 4; ++newY ) {
@@ -177,7 +178,7 @@ class Group4CellsMaker extends Object {
                         z = 0;
                     }
                 }
-                //Debug.debugPrtLn( "after group4CellsMaker does a Y, currGroup is " + this.toString() );
+                //Debug.debugPrtLn( "after group4CellsMaker does a Y, currGroup is " + this.toString( ) );
             } else {
                 if ( loopingThrough == X ) {
                     for ( int newX = 0; newX < 4; ++newX ) {
@@ -201,18 +202,18 @@ class Group4CellsMaker extends Object {
                         }
                     }
                 }
-                //Debug.debugPrtLn( "after group4CellsMaker does a X, currGroup is " + this.toString() );
+                //Debug.debugPrtLn( "after group4CellsMaker does a X, currGroup is " + this.toString( ) );
             }
         }
         //return currGroup;
-    } // makeNextNonDiagGroup()
+    } // makeNextNonDiagGroup( )
 
 
     /**
      * 
      * Doing diagonals in planes, so working through planes
      */
-    private  void makeNextPlaneDiagGroup() {
+    private  void makeNextPlaneDiagGroup( ) {
         
         if ( loopingThrough == YZ ) {
             if ( firstDiag ) {
@@ -241,7 +242,7 @@ class Group4CellsMaker extends Object {
                     y = 0;
                 }
             }
-            //Debug.debugPrtLn( "after group4CellsMaker does a YZ diag, currGroup is " + this.toString() );
+            //Debug.debugPrtLn( "after group4CellsMaker does a YZ diag, currGroup is " + this.toString( ) );
         } else {
             if ( loopingThrough == XZ ) {
                 if ( firstDiag ) {
@@ -269,7 +270,7 @@ class Group4CellsMaker extends Object {
                         z = 0;
                     }
                 }
-                //Debug.debugPrtLn( "after group4CellsMaker does a XZ diag, currGroup is " + this.toString() );
+                //Debug.debugPrtLn( "after group4CellsMaker does a XZ diag, currGroup is " + this.toString( ) );
             } else {
                 if ( firstDiag ) {
                     /* keep in XY plane, so only z varies from call to call:
@@ -300,15 +301,14 @@ class Group4CellsMaker extends Object {
                         hasMorePlaneDiag = false;
                     }
                 }
-                //Debug.debugPrtLn( "after group4CellsMaker does a XY diag, currGroup is " + this.toString() );
+                //Debug.debugPrtLn( "after group4CellsMaker does a XY diag, currGroup is " + this.toString( ) );
                 // 
             }
         }
-        firstDiag = /* this always happens, factors out of ALL the cases 
-        above */
-        ! firstDiag;
+        /* the following always happens, factors out of ALL the cases above */
+        firstDiag =  ! firstDiag;
         //return currGroup;
-    } // makeNextPlaneDiagGroup()
+    } // makeNextPlaneDiagGroup( )
 
 
 
@@ -324,7 +324,7 @@ class Group4CellsMaker extends Object {
     * This builds a group and sets the "loopingThrough" flag to specify what the
     * next group will be.
     */
-    private  void makeNextDiagDiagGroup() {
+    private  void makeNextDiagDiagGroup( ) {
         
         if ( loopingThrough == X_Y_Z_ ) {
             // should be (0,0, 0) (1,1, 1) (2,2, 2) (3,3, 3)
@@ -345,8 +345,10 @@ class Group4CellsMaker extends Object {
                 loopingThrough = X3Y3Z_;
             } else {
                 if ( loopingThrough == X3Y3Z_ ) {
-                    myApplet.showDebugInfo("makeNexDiagDiagGroup( ) is working on");
-                    myApplet.showDebugInfo("(3,3, 0) (2,2, 1) (1,1, 2) (0,0, 3)");
+                    if (myApplet != null) {
+                        myApplet.showDebugInfo("makeNexDiagDiagGroup( ) is working on");
+                        myApplet.showDebugInfo("(3,3, 0) (2,2, 1) (1,1, 2) (0,0, 3)");
+                    }
                     for ( int newZ = 0; newZ < 4; ++newZ ) {
                         currGroup.theData[newZ].x = 3 - newZ;
                         currGroup.theData[newZ].y = 3 - newZ;
@@ -356,32 +358,38 @@ class Group4CellsMaker extends Object {
                 } else {
                     if ( loopingThrough == X3Y_Z_) {
                         // The following appears!
-                        // myApplet.showDebugInfo("makeNexDiagDiagGroup( ) is working on");
-                        // myApplet.showDebugInfo("(3,0, 0) (2,1, 1) (1,2, 2) (0,3, 3)");
-                        // should be (3,0, 0) (2,1, 1) (1,2, 2) (0,3, 3) 
+                        // if (myApplet != null) {
+                        //      myApplet.showDebugInfo("makeNexDiagDiagGroup( ) is working on");
+                        //      myApplet.showDebugInfo("(3,0, 0) (2,1, 1) (1,2, 2) (0,3, 3)");
+                        //      should be (3,0, 0) (2,1, 1) (1,2, 2) (0,3, 3)
+                        //  }
                         for ( int newZ = 0; newZ < 4; ++newZ ) {
                             currGroup.theData[newZ].x = 3 - newZ;
                             currGroup.theData[newZ].y = newZ;
                             currGroup.theData[newZ].z = newZ;
                         }
-                        myApplet.showDebugInfo( currGroup.toString( ) ); // shows a coordinate(s)
-                        // how to see what the specified cells hold??
-                        
-                        loopingThrough = NONE;
-                        hasMoreGroups = false;
-                        hasMoreNonDiag = false;
-                        hasMorePlaneDiag = false;
+                        if (myApplet != null) {
+                            myApplet.showDebugInfo( currGroup.toString( ) ); // shows a coordinate(s)
+                            // how to see what the specified cells hold??
+                        }
+                        loopingThrough = ALL_DONE;
                     } else {
                         // is there anything to do??
-                        if ( loopingThrough == X3Y_Z_) {
-                            myApplet.showDebugInfo("makeNexDiagDiagGroup( ) is done");
+                        if ( loopingThrough == ALL_DONE) {
+                            loopingThrough = NONE;
+                            hasMoreGroups = false;
+                            hasMoreNonDiag = false;
+                            hasMorePlaneDiag = false;
+                            if (myApplet != null) {
+                                myApplet.showDebugInfo("makeNexDiagDiagGroup( ) is done");
+                            }
                         }
                     }
                 } // x3y_z_
             } // x3y3z_
         } // x_y3z_
-        //Debug.debugPrtLn( "after group4CellsMaker does a diagdiag, currGroup is " + this.toString() );
+        //Debug.debugPrtLn( "after group4CellsMaker does a diagdiag, currGroup is " + this.toString( ) );
         //return currGroup;
-    } // makeNextDiagDiagGroup()
+    } // makeNextDiagDiagGroup( )
     
 } // class Group4CellsMaker

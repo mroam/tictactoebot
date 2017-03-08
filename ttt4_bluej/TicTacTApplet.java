@@ -87,7 +87,7 @@ public class TicTacTApplet extends JApplet
 	 * Also see the Debug class which merely uses System.out.print
 	 */
 	public void showDebugInfo( String newMsg ) {
-	    debugFeedback.appendText( newMsg + "\n");  // deprecated "appendText( )
+	    debugFeedback.append( newMsg + "\n");  // deprecated "appendText( )
 	}
 	    
 	
