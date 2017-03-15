@@ -59,6 +59,9 @@ class Board extends Canvas {
         } // for y
         
         
+        
+        
+        
         this.addMouseListener( new MouseAdapter( ) 
         {
         
@@ -90,7 +93,9 @@ class Board extends Canvas {
             } // mousePressed
         } ); // end of addMouseListener
     } // constructor
-
+   
+    
+    
 
     /**
      * This decides how to respond to opponent's move
@@ -108,9 +113,8 @@ class Board extends Canvas {
                     parentApplet.scoresHaveChanged();
                 }
                 if ( howManyCellsFull < totNumCells ) {
-                    newComputerMove = chooseMove();
-                    setCellXorO( newComputerMove,
-                                      /* note: computer is 'o' */ Cell.O );
+                    newComputerMove = chooseMoveSmart();   // this used to call chooseMove( )
+                    setCellXorO( newComputerMove, /* note: computer is 'o' */ Cell.O );
                     Vector newComputerWins = newWins( newComputerMove,
                                                                    Cell.O );
                     if ( ! newComputerWins.isEmpty() ) {
@@ -273,8 +277,52 @@ class Board extends Canvas {
     * What to do if the board is full?  hmmm, this just takes the first available win which might 
     * not be the BEST: some other win might win in two directions at once! 
     * Should rank and compare the wins (or all possible moves).
+    * 
+    * This is almost identical to chooseMoveSmart, except this does not run (AI self-play) tournaments to decide moves.
+    * 
+    * This used to be called by registerOpponentMove( ) but now is usually (only?) called by chooseMoveSmart( )
     */
-     CellLoc chooseMove( ) {
+     CellLoc chooseMove( int whoToLookForXorO ) {
+        CellLoc theNewMove = null;
+        if ( (whoToLookForXorO != Cell.X) && (whoToLookForXorO != Cell.O) ) {
+            System.out.println("chooseMove( ) isn't happy to look for move for undefined nonX nonO '" + whoToLookForXorO + "'??!!");
+            return null;
+        }
+        int ourOpponent = opponent( whoToLookForXorO );
+        /* first check where we ("whoToLookForXorO") can win (will be null if can't win right now) */
+        if ( (theNewMove = canWin( whoToLookForXorO )) == null ) {
+            /* Failing that, check where opponent can win (will be null if human 
+            can't win right now) */
+            if ( (theNewMove = canWin( ourOpponent )) == null ) {
+                /* Try to turn some 2's into 3s... */
+                
+                if ( (theNewMove = canImprove( whoToLookForXorO )) == null ) {
+                    /* try to stop the human from turning 2's into 3's.. */
+                    if ( (theNewMove = canImprove( ourOpponent )) == null ) {
+                        theNewMove = chooseRandomMove( );
+                    }
+                }
+            }
+        }
+        return theNewMove;
+    } // chooseMove( )
+    
+    
+    /**
+    * Going to call some methods which return null (no move found) or the loc of the move.
+    * Finally, chooseRandomMove() is ALMOST guaranteed to return a move unless the board is full. 
+    * What to do if the board is full?  hmmm, this just takes the first available win which might 
+    * not be the BEST: some other win might win in two directions at once! 
+    * Should rank and compare the wins (or all possible moves).
+    * 
+    * This is almost identical to chooseMove, except this also runs AI self-play tournaments to decide moves.
+    * PS: tournaments do NOT call chooseMoveSmart but instead merely use chooseMove( )
+    * maybe we ought to have semi-smart (or time-restricted) moves for tournaments.
+    * Perhaps the human moves would be random in our tournament games??
+    * 
+    * This is called by registerOpponentMove( )
+    */
+     CellLoc chooseMoveSmart( ) {
         CellLoc theNewMove = null;
         /* first check where computer can win (will be null if can't win right now) */
         if ( (theNewMove = canWin( /* computer is o */ Cell.O )) == null ) {
@@ -283,18 +331,39 @@ class Board extends Canvas {
             if ( (theNewMove = canWin( /* human is x */ Cell.X )) == null ) {
                 /* Try to turn some 2's into 3s... */
                 
-                if ( (theNewMove = canImprove( Cell.O )) == null ) {
-                    /* try to stop the human from turning 2's into 3's.. */
-                    if ( (theNewMove = canImprove( Cell.X )) == null ) {
-                        theNewMove = chooseRandomMove();
+                if ( (theNewMove = useTournamentToDecide(  /* computer is o */ Cell.O, /* timeLimitInSeconds */ 60 )) == null) {
+                
+                    if ( (theNewMove = canImprove( Cell.O )) == null ) {
+                        /* try to stop the human from turning 2's into 3's.. */
+                        if ( (theNewMove = canImprove( Cell.X )) == null ) {
+                            theNewMove = chooseRandomMove( );
+                        }
                     }
-                }
+                } // tournament
             }
         }
         return theNewMove;
-    } // chooseMove( )
+    } // chooseMoveSmart( )
+    
 
-
+    
+    /**
+     * For all of the possible moves, try playing a full game starting with that move.
+     * So there could be at most 64 games if we play one for each possible move...
+     */
+       CellLoc useTournamentToDecide( int XorO, int timeLimitInSeconds ) {
+         // copy the current board, store it, and play on the copy
+         
+         // we need some kind of data collection (arrayList? dictionary?) to keep score of which moves lead to final win most often
+           
+         // this will call chooseMove( Cell.X ) and then call chooseMove( Cell.O );
+           // return the move that won us the most games...
+           Debug.debugPrtLn( "useTournamentToDecide()  is done" );
+           return null;
+        }
+    
+    
+    
     /**
      * Detect a three-in-a-row with blank and return the blank's loc (or null).
      */
@@ -408,7 +477,20 @@ class Board extends Canvas {
     } // setColor()
 
 
-
+    /**
+     * utility function
+     * for "X" this returns "O" and vice-versa
+     */
+    int opponent( int XorO ) {
+        if (XorO == Cell.X) {
+            return Cell.O;
+        } else if (XorO == Cell.O) {
+            return Cell.X;
+        } else {
+            System.out.println("What?? Board is trying to figure the opponent of undefined '" + XorO + "'!!??");
+            return Cell.BLANK;
+        }
+    } // opponent
 
     /** 
      * Returns the pointer to the specified cell.

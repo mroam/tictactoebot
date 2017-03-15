@@ -39,6 +39,8 @@ which might maybe be stopping at the last (diagdiag) group instead of AFTER it??
 
 
 Plans:
+[ ]We need a new Class that merely holds board data, not the drawing, and the new class needs 
+to have a copy constructor for tournaments.
 []Board should notice when game over (no more scoring moves of 4 in a row are available).
 []Teach the AI to build forks or traps.
 []Add some unit tests.
