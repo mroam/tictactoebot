@@ -2,28 +2,23 @@ import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 /**
- * Contains (keeps track of and displays) 4 boards of 4x4 grids
+ * Contains (keeps track of) 4 boards of 4x4 grids
  * "chooseMove( )" , below, has the code for computer deciding how to respond to a move.
  * 
  * @author Mike Roam
  * @version rev. 6 Dec 2004, annotated & reformated 2016 oct 22
- * Was Canvas, pre Swing, and replaced by JPanel, 2017 mar 22
+ * isn't Canvas part of AWT so pre Swing and perhaps to be replaced by JPanel??
  * See http://www.java2s.com/Tutorial/Java/0240__Swing/UsingJPanelasacanvas.htm
  * 
- * Does this need a preferredSize/Width/Height method(s)?
+ * 
  */
-class Board extends JPanel /* was Canvas*/ {
+class OldBoard extends Canvas {
     int xScore = 0;
     int oScore = 0;
     int howManyCellsFull = /* gets incremented in setCellXorO( ) */ 0;
 
-    Boss parentBoss = null;
+    OldTicTacTApplet parentApplet = null;
     Group4CellsMaker myGroupMaker = null; // gets built in constructor
     
     private  Cell[][][] theData = new Cell[ 4 ] [ 4 ] [ 4 ];
@@ -41,13 +36,13 @@ class Board extends JPanel /* was Canvas*/ {
     *                                     0,2,1   1,2,1   2,2,1   3,2,1       0,0,2   1,0,2   2,0,2   3,0,2
     *                                                                         0,1,2   1,1,2   2,1,2   3,1,2  etc...
     */
-    public Board( int boardWidth, int boardHeight, Boss newParent ) {
-        super( );
+    OldBoard( int boardWidth, int boardHeight, OldTicTacTApplet newParent ) {
+        super();
         this.setSize( boardWidth, boardHeight );
         /* Next line is so we can tell the Boss to repaint score fields  when they change.
         (How else would parent applet know?? */
-        parentBoss = newParent; // might be null!
-        myGroupMaker = new Group4CellsMaker( /*Board*/this, parentBoss);
+        parentApplet = newParent;
+        //myGroupMaker = new Group4CellsMaker( /*board*/this, parentApplet);
         
         int spaceBetweenBoards = 3;
         int cellGap = 2;
@@ -83,7 +78,7 @@ class Board extends JPanel /* was Canvas*/ {
                     for ( int yLoc = 0; yLoc < 4; ++yLoc ) {
                         for ( int xLoc = 0; xLoc < 4; ++xLoc ) {
                             for ( int zLoc = 0; zLoc < 4; ++zLoc ) {
-                                if ( theData[xLoc][yLoc][zLoc].contains( e.getPoint( ) ) ) {
+                                if ( theData[xLoc][yLoc][zLoc].contains( e.getPoint() ) ) {
                                     try  {
                                         registerOpponentMove( new CellLoc( xLoc, yLoc, zLoc ) );
                                     } catch( BadLocExc blem ) {
@@ -106,41 +101,41 @@ class Board extends JPanel /* was Canvas*/ {
      * This decides how to respond to opponent's move
      */
      void registerOpponentMove( CellLoc theMoveLoc ) {
-        Debug.debugPrt( "in registerOpponentMove( ), human trying to move to " + theMoveLoc );
+        Debug.debugPrt( "in registerOpponentMove(), human trying to move to " + theMoveLoc );
         CellLoc newComputerMove = null;
         if ( howManyCellsFull < totNumCells ) {
             try  {
                 setCellXorO( theMoveLoc, /* note: human is 'X' */ Cell.X );
                 Vector newHumanWins = newWins( theMoveLoc, Cell.X );
-                if ( ! newHumanWins.isEmpty( ) ) {
+                if ( ! newHumanWins.isEmpty() ) {
                     Debug.debugPrtLn( "New Human Win detected!" );
-                    recountScores( );
-                    parentBoss.scoresHaveChanged( );
+                    recountScores();
+                    parentApplet.scoresHaveChanged();
                 }
                 if ( howManyCellsFull < totNumCells ) {
-                    newComputerMove = chooseMoveSmart( );   // this used to call chooseMove( )
+                    newComputerMove = chooseMoveSmart();   // this used to call chooseMove( )
                     setCellXorO( newComputerMove, /* note: computer is 'o' */ Cell.O );
                     Vector newComputerWins = newWins( newComputerMove,
                                                                    Cell.O );
-                    if ( ! newComputerWins.isEmpty( ) ) {
+                    if ( ! newComputerWins.isEmpty() ) {
                         Debug.debugPrtLn( "New Computer Win detected!" );
-                        recountScores( );
-                        parentBoss.scoresHaveChanged( );
+                        recountScores();
+                        parentApplet.scoresHaveChanged();
                     }
-                    warnOpponent( );
+                    warnOpponent();
                     /* warnOpponent blanks all cells, so now let's light up new 
                     green victories... **/
-                    for ( Enumeration e = newComputerWins.elements( ); e.hasMoreElements( );  ) {
-                        ((Group4) (e.nextElement( ))).setColor( Color.green );
+                    for ( Enumeration e = newComputerWins.elements(); e.hasMoreElements();  ) {
+                        ((Group4) (e.nextElement())).setColor( Color.green );
                     }
                 }
                 else {
                     /* but not drawing new computer wins since board was full so 
                     computer didn't move */
-                    warnOpponent( );
+                    warnOpponent();
                 }
-                for ( Enumeration e = newHumanWins.elements( ); e.hasMoreElements( );  ) {
-                    ((Group4) (e.nextElement( ))).setColor( Color.green );
+                for ( Enumeration e = newHumanWins.elements(); e.hasMoreElements();  ) {
+                    ((Group4) (e.nextElement())).setColor( Color.green );
                 }
             } catch( FullSquareExc fse ) {
                 System.out.println( "That square is taken-" + fse );
@@ -149,7 +144,7 @@ class Board extends JPanel /* was Canvas*/ {
         else {
             Debug.debugPrt( "Board is full, can't register new move " + theMoveLoc );
         }
-    } //registerOpponentMove( )
+    } //registerOpponentMove()
 
 
     /**
@@ -162,18 +157,18 @@ class Board extends JPanel /* was Canvas*/ {
         their information washes over. Alternatives are to run through all 
         the groups twice with coloring, once for 2s and then for 3s.
      */
-     void warnOpponent( ) {
+     void warnOpponent() {
         
-        Vector groupOf2Xs = new Vector( );
-        Vector groupOf3Xs = new Vector( );
-        Vector groupOf2Os = new Vector( );
-        Vector groupOf3Os = new Vector( );
+        Vector groupOf2Xs = new Vector();
+        Vector groupOf3Xs = new Vector();
+        Vector groupOf2Os = new Vector();
+        Vector groupOf3Os = new Vector();
         /* blank out all the previous color warnings and green win signals */
         setColor( Color.white );
-        myGroupMaker.startOver( );
+        myGroupMaker.startOver();
         try  {
-            for ( Group4 currGroup = myGroupMaker.makeNextGroup( ); myGroupMaker.hasMoreGroups; currGroup = myGroupMaker.makeNextGroup( ) ) {
-                Group4CellsRpt thisRpt = new Group4CellsRpt( currGroup, this );
+            for ( Group4 currGroup = myGroupMaker.makeNextGroup(); myGroupMaker.hasMoreGroups; currGroup = myGroupMaker.makeNextGroup() ) {
+                Group4CellsRpt thisRpt = null; // = new Group4CellsRpt( currGroup, this );
                 if ( (thisRpt.howManyXOBs( Cell.X ) == 3) && (thisRpt.howManyXOBs( Cell.BLANK ) == 1) ) {
                     groupOf3Xs.addElement( thisRpt.theCellsLocs );
                 }
@@ -202,35 +197,35 @@ class Board extends JPanel /* was Canvas*/ {
         }
         int miker = 0;
         /* the ordering of this coloring matters! (unless we start to combine colors ) */
-        for ( Enumeration e = groupOf2Os.elements( ); e.hasMoreElements( );  ) {
-            ((Group4) (e.nextElement( ))).setColor( Color.lightGray );
+        for ( Enumeration e = groupOf2Os.elements(); e.hasMoreElements();  ) {
+            ((Group4) (e.nextElement())).setColor( Color.lightGray );
         }
-        for ( Enumeration e = groupOf2Xs.elements( ); e.hasMoreElements( );  ) {
-            ((Group4) (e.nextElement( ))).setColor( Color.yellow );
+        for ( Enumeration e = groupOf2Xs.elements(); e.hasMoreElements();  ) {
+            ((Group4) (e.nextElement())).setColor( Color.yellow );
         }
-        for ( Enumeration e = groupOf3Os.elements( ); e.hasMoreElements( );  ) {
-            ((Group4) (e.nextElement( ))).setColor( Color.darkGray );
+        for ( Enumeration e = groupOf3Os.elements(); e.hasMoreElements();  ) {
+            ((Group4) (e.nextElement())).setColor( Color.darkGray );
         }
-        for ( Enumeration e = groupOf3Xs.elements( ); e.hasMoreElements( );  ) {
-            ((Group4) (e.nextElement( ))).setColor( Color.red );
+        for ( Enumeration e = groupOf3Xs.elements(); e.hasMoreElements();  ) {
+            ((Group4) (e.nextElement())).setColor( Color.red );
         }
         Debug.debugPrtLn( "warnOpponent is done" );
-    } // warnOpponent( )
+    } // warnOpponent()
 
     /** 
      * Walk through the whole grid counting winning groups of four.
      * Somebody is not using the last diagdiag group -- maybe this for ( ) is going obob?
      */
-     void recountScores( ) {
+     void recountScores() {
         int newXScore = 0;
         int newOScore = 0;
-        myGroupMaker.startOver( );
+        myGroupMaker.startOver();
         try  {
             for ( Group4 currGroup = myGroupMaker.makeNextGroup( ); 
                        myGroupMaker.hasMoreGroups;  /* is this bailing out during the last group?? */
                              /* should this be (while) currGroup <> nill ?? */
-                       currGroup = myGroupMaker.makeNextGroup( ) ) {
-                Group4CellsRpt thisRpt = new Group4CellsRpt( currGroup, this );
+                       currGroup = myGroupMaker.makeNextGroup() ) {
+                Group4CellsRpt thisRpt = null; // new Group4CellsRpt( currGroup, this );
                 if ( thisRpt.howManyXOBs( Cell.X ) == 4 ) {
                     newXScore++;
                 } else {
@@ -249,22 +244,22 @@ class Board extends JPanel /* was Canvas*/ {
         if ( (oScore != newOScore) || (xScore != newXScore) ) {
             oScore = newOScore;
             xScore = newXScore;
-            parentBoss.scoresHaveChanged( );
+            parentApplet.scoresHaveChanged();
         }
-        Debug.debugPrtLn( "recountScores( ) is done" );
-    } // recountScores( )
+        Debug.debugPrtLn( "recountScores() is done" );
+    } // recountScores()
 
 
 
-    CellLoc chooseRandomMove( ) {
+    CellLoc chooseRandomMove() {
         /* for now, just randomly choose a blank square */
-        int xR = (int) (Math.random( ) * 4.0);
-        int yR = (int) (Math.random( ) * 4.0);
-        int zR = (int) (Math.random( ) * 4.0);
+        int xR = (int) (Math.random() * 4.0);
+        int yR = (int) (Math.random() * 4.0);
+        int zR = (int) (Math.random() * 4.0);
         while ( getCellXorO( xR, yR, zR ) != Cell.BLANK ) {
-            xR = (int) (Math.random( ) * 4.0);
-            yR = (int) (Math.random( ) * 4.0);
-            zR = (int) (Math.random( ) * 4.0);
+            xR = (int) (Math.random() * 4.0);
+            yR = (int) (Math.random() * 4.0);
+            zR = (int) (Math.random() * 4.0);
         }
         CellLoc theNewMove = null;
         try  {
@@ -273,12 +268,12 @@ class Board extends JPanel /* was Canvas*/ {
             System.out.println( "Computer is choosing bogus random move:" + bler );
         }
         return theNewMove;
-    } // chooseRandomMove( )
+    } // chooseRandomMove()
 
 
     /**
     * Going to call some methods which return null (no move found) or the loc of the move.
-    * Finally, chooseRandomMove( ) is ALMOST guaranteed to return a move unless the board is full. 
+    * Finally, chooseRandomMove() is ALMOST guaranteed to return a move unless the board is full. 
     * What to do if the board is full?  hmmm, this just takes the first available win which might 
     * not be the BEST: some other win might win in two directions at once! 
     * Should rank and compare the wins (or all possible moves).
@@ -315,7 +310,7 @@ class Board extends JPanel /* was Canvas*/ {
     
     /**
     * Going to call some methods which return null (no move found) or the loc of the move.
-    * Finally, chooseRandomMove( ) is ALMOST guaranteed to return a move unless the board is full. 
+    * Finally, chooseRandomMove() is ALMOST guaranteed to return a move unless the board is full. 
     * What to do if the board is full?  hmmm, this just takes the first available win which might 
     * not be the BEST: some other win might win in two directions at once! 
     * Should rank and compare the wins (or all possible moves).
@@ -363,7 +358,7 @@ class Board extends JPanel /* was Canvas*/ {
            
          // this will call chooseMove( Cell.X ) and then call chooseMove( Cell.O );
            // return the move that won us the most games...
-           Debug.debugPrtLn( "useTournamentToDecide( )  is done" );
+           Debug.debugPrtLn( "useTournamentToDecide()  is done" );
            return null;
         }
     
@@ -373,10 +368,10 @@ class Board extends JPanel /* was Canvas*/ {
      * Detect a three-in-a-row with blank and return the blank's loc (or null).
      */
      CellLoc canWin( int XorO ) {
-        myGroupMaker.startOver( );
+        myGroupMaker.startOver();
         try  {
-            for ( Group4 currGroup = myGroupMaker.makeNextGroup( ); myGroupMaker.hasMoreGroups; currGroup = myGroupMaker.makeNextGroup( ) ) {
-                Group4CellsRpt thisRpt = new Group4CellsRpt( currGroup, this );
+            for ( Group4 currGroup = myGroupMaker.makeNextGroup(); myGroupMaker.hasMoreGroups; currGroup = myGroupMaker.makeNextGroup() ) {
+                Group4CellsRpt thisRpt = null; // = new Group4CellsRpt( currGroup, this );
                 if ( (thisRpt.howManyXOBs( XorO ) == 3) && (thisRpt.howManyXOBs( Cell.BLANK ) == 1) ) {
                     /* have to figure out which square is the blank, and return it! */
                     CellLoc[] whereTheBlanksAre = thisRpt.locsOfXOBs( Cell.BLANK );
@@ -388,11 +383,11 @@ class Board extends JPanel /* was Canvas*/ {
             myGroupMaker.makeNextGroup-->noMoreGroupsExc;
                                 howManyXOBs-->badCellTypeExc;  new 
             Group4CellsRpt-->badGroupSizeExc */
-            System.out.println( "in canWin( ) " + anyOldExc );
+            System.out.println( "in canWin() " + anyOldExc );
         }
-        Debug.debugPrtLn( "canWin( )  is done (false)" );
+        Debug.debugPrtLn( "canWin()  is done (false)" );
         return null;
-    } // canWin( )
+    } // canWin()
 
 
     /**
@@ -401,10 +396,10 @@ class Board extends JPanel /* was Canvas*/ {
     */
      CellLoc canImprove( int XorO ) {
         
-        myGroupMaker.startOver( );
+        myGroupMaker.startOver();
         try  {
-            for ( Group4 currGroup = myGroupMaker.makeNextGroup( ); myGroupMaker.hasMoreGroups; currGroup = myGroupMaker.makeNextGroup( ) ) {
-                Group4CellsRpt thisRpt = new Group4CellsRpt( currGroup, this );
+            for ( Group4 currGroup = myGroupMaker.makeNextGroup(); myGroupMaker.hasMoreGroups; currGroup = myGroupMaker.makeNextGroup() ) {
+                Group4CellsRpt thisRpt = null; // new Group4CellsRpt( currGroup, this );
                 if ( (thisRpt.howManyXOBs( XorO ) == 2) && (thisRpt.howManyXOBs( Cell.BLANK ) == 2) ) {
                     /* have to figure out which square is the blank, and return 
                     it! */
@@ -417,11 +412,11 @@ class Board extends JPanel /* was Canvas*/ {
             myGroupMaker.makeNextGroup-->noMoreGroupsExc;
                                 howManyXOBs-->badCellTypeExc;  new 
             Group4CellsRpt-->badGroupSizeExc */
-            System.out.println( "in canImprove( ) " + anyOldExc );
+            System.out.println( "in canImprove() " + anyOldExc );
         }
-        Debug.debugPrtLn( "canImprove( )  is done (false)" );
+        Debug.debugPrtLn( "canImprove()  is done (false)" );
         return null;
-    } // canImprove( )
+    } // canImprove()
 
 
     /** 
@@ -429,17 +424,17 @@ class Board extends JPanel /* was Canvas*/ {
     * (This lets us light up the recent wins.)
     * Returns a Vector full of "Group4".
     */
-     Vector<Group4> newWins( CellLoc newMove, int XorO ) {
+     Vector newWins( CellLoc newMove, int XorO ) {
         
-        Vector<Group4> newWinVector = new Vector<Group4>( );
+        Vector newWinVector = new Vector();
         if ( newMove == null ) {
             return newWinVector;
         }
-        myGroupMaker.startOver( );
+        myGroupMaker.startOver();
         try  {
-            for ( Group4 currGroup = myGroupMaker.makeNextGroup( ); myGroupMaker.hasMoreGroups; currGroup = myGroupMaker.makeNextGroup( ) ) {
+            for ( Group4 currGroup = myGroupMaker.makeNextGroup(); myGroupMaker.hasMoreGroups; currGroup = myGroupMaker.makeNextGroup() ) {
                 if ( currGroup.hasCell( newMove ) ) {
-                    Group4CellsRpt thisRpt = new Group4CellsRpt( currGroup, this );
+                    Group4CellsRpt thisRpt = null; // new Group4CellsRpt( currGroup, this );
                     if ( thisRpt.howManyXOBs( XorO ) == 4 ) {
                         /* Vector full of Group4  */
                         newWinVector.addElement( thisRpt.theCellsLocs );
@@ -453,18 +448,14 @@ class Board extends JPanel /* was Canvas*/ {
             System.out.println( "in didWin:" + anyOldExc );
         }
         return newWinVector;
-    } // newWins( )
+    } // newWins()
 
     
 
     /**
-     * Draws a picture of the board, by telling cells to paint themselves.
-     * Was "paint( )" until Board upgraded to JPanel
+     * Draws a picture of the board, by telling cells to paint themselves. (See 
      */
-    public  void paintComponent( Graphics g ) {
-        int width = getWidth( );
-        int height = getHeight( );
-        
+    public  void paint( Graphics g ) {
         for ( int y = 0; y < 4; ++y ) {
             for ( int x = 0; x < 4; ++x ) {
                 for ( int z = 0; z < 4; ++z ) {
@@ -472,7 +463,7 @@ class Board extends JPanel /* was Canvas*/ {
                 }
             }
         }
-    } // paint( )
+    } // paint()
 
 
     public  void setColor( Color newColor ) {
@@ -483,7 +474,7 @@ class Board extends JPanel /* was Canvas*/ {
                 }
             }
         }
-    } // setColor( )
+    } // setColor()
 
 
     /**
@@ -520,7 +511,7 @@ class Board extends JPanel /* was Canvas*/ {
      */
     int getCellXorO( int x, int y, int z ) {
         
-        return theData[x][y][z].getData( );
+        return theData[x][y][z].getData();
     }
 
     /**
@@ -535,14 +526,14 @@ class Board extends JPanel /* was Canvas*/ {
      */
     void setCellXorO( int x, int y, int z, int XorO ) throws FullSquareExc {
     
-        if ( theData[x][y][z].getData( ) != Cell.BLANK ) {
+        if ( theData[x][y][z].getData() != Cell.BLANK ) {
             throw new FullSquareExc( "(" + x + "," + y + "," + z + ")" );
         }
         else {
             try  {
                 theData[x][y][z].setData( XorO );
                 howManyCellsFull++;
-                repaint( );
+                repaint();
             } catch( FullSquareExc fse ) {
                 throw fse;
             }
@@ -562,11 +553,11 @@ class Board extends JPanel /* was Canvas*/ {
     /** 
      * Blank out all the squares and the score, (including color)
      */
-     void newGame( ) {
+     void newGame() {
         for ( int yLoop = 0; yLoop < 4; ++yLoop ) {
             for ( int xLoop = 0; xLoop < 4; ++xLoop ) {
                 for ( int zLoop = 0; zLoop < 4; ++zLoop ) {
-                    theData[xLoop][yLoop][zLoop].clearData( );
+                    theData[xLoop][yLoop][zLoop].clearData();
                     theData[xLoop][yLoop][zLoop].setColor( Color.white );
                 }
             }
@@ -574,21 +565,6 @@ class Board extends JPanel /* was Canvas*/ {
         oScore = 0;
         xScore = 0;
         howManyCellsFull = 0;
-        repaint( );
-    } // newGame( )
-    
-    
-    /**
-     * main( ) for board so we can instantiate one to mess around with.
-     * Not normally used. (Boss will create a JFrame to hold us, jah?
-     * From example of JPanel as canvas 
-     * http://www.java2s.com/Tutorial/Java/0240__Swing/UsingJPanelasacanvas.htm
-     */
-    public static void main(String args[]) {
-        JFrame frame = new JFrame("Board...");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new Board(/*boardWidth*/400, /*boardHeight*/250, /*newParent*/null ));
-        frame.setSize(400, 250);
-        frame.setVisible(true);
-    } // main( )
-} // class Board
+        repaint();
+    } // newGame()
+} // class OldBoard

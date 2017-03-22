@@ -5,7 +5,8 @@ by Mike Roam (started working on this in 1998 or earlier)
 VERSION or DATE: 2016 oct 22 revision
 Was 2013 jan 22 upgrade of 2004 Dec 4 version. (from original approx 2000)
 
-HOW TO START THIS PROJECT: Run TicTacTApplet in applet viewer or browser.
+HOW TO START THIS PROJECT: Run "Boss" main( )
+No longer can Run TicTacTApplet in applet viewer or browser.
 ps: to open for editing in bluej, double-click the "package.bluej" file.
 
 USER INSTRUCTIONS: The game continues until no more moves are available
@@ -15,9 +16,8 @@ and the winner is the player with the most 4-in-a-row. Unlike 3x3 tictactoe, thi
 Bugs:
 []Compiler is warning me "Board.java uses unchecked or unsafe operations. 
      Recompile with -Xlint:unchecked for details."
-[]The board doesn't notice all 4 in a rows right away, 
-3D Java Misses This human score  (3,0,0) (2,1,1) (1,2,2) (0,3,3) which is the last diagDiag
-
+[fixed]The board didn't notice all 4 in a rows right away, 
+3D Java Missed this human score  (3,0,0) (2,1,1) (1,2,2) (0,3,3) which is the last diagDiag
 ...X
 ....   ....
 ....   ..X.   ....
@@ -39,6 +39,10 @@ which might maybe be stopping at the last (diagdiag) group instead of AFTER it??
 
 
 Plans:
+[ ]Replace Board's Vectors with ArrayLists ( could still use vector with type spec, e.g. 
+Vector<String> v = new Vector<String>( );
+add("A");
+
 [ ]We need a new Class that merely holds board data, not the drawing, and the new class needs 
 to have a copy constructor for tournaments.
 []Board should notice when game over (no more scoring moves of 4 in a row are available).

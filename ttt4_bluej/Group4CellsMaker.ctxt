@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=newMyBoard\ myNewApplet
-comment0.target=Group4CellsMaker(Board,\ TicTacTApplet)
+comment0.params=newMyBoard\ myNewParentBoss
+comment0.target=Group4CellsMaker(Board,\ Boss)
 comment0.text=\n\ default\ constructor\n
 comment1.params=
 comment1.target=Group4\ makeNextGroup()

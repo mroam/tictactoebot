@@ -4,15 +4,16 @@ import java.awt.event.*;
 
 
 /**
- * Class TicTacTApplet - write a description of the class here
+ * Class OldTicTacTApplet - oldfashioned way of starting the program,
+ * being phased out by Mike in 2017, replaced by "Boss" which has JFrame
  * 
  * @author Mike Roam
  * @version 6 December 2004
  */
-public class TicTacTApplet extends JApplet
+public class OldTicTacTApplet extends JApplet
 {
-	// instance variables - replace the example below with your own
-	 Board myBoard = /* set up in init() */ null;
+	// instance variables
+	 OldBoard myBoard = /* set up in init() */ null;
 
 	 TextField xScoreFld = new TextField( /* size */ 4 );
 	 TextField oScoreFld = new TextField( /* size */ 4 );
@@ -43,9 +44,9 @@ public class TicTacTApplet extends JApplet
 		rootPane.putClientProperty("defeatSystemEventQueueCheck", Boolean.TRUE);
 	
 	    Debug.debug = true;
-		myBoard = new Board( 450, 300, this );
-		this.getContentPane().setLayout(new FlowLayout() );
-		this.getContentPane().add( myBoard );
+		myBoard = null; // = new Board( 450, 300, this );
+		this.getContentPane( ).setLayout(new FlowLayout() );
+		this.getContentPane( ).add( myBoard );
 		Panel scorePanel = new Panel();
 		scorePanel.add( new Label( "Human Score:" ) );
 		scorePanel.add( xScoreFld );
@@ -143,10 +144,10 @@ public class TicTacTApplet extends JApplet
 		// simple text displayed on applet
 		g.setColor(Color.white);
 		g.fillRect(0, 0, 200, 100);
-// 		g.setColor(Color.black);
-// 		g.drawString("Sample Applet", 20, 20);
-// 		g.setColor(Color.blue);
-// 		g.drawString("created by BlueJ", 20, 40);
+        // 		g.setColor(Color.black);
+        // 		g.drawString("Sample Applet", 20, 20);
+        // 		g.setColor(Color.blue);
+        // 		g.drawString("created by BlueJ", 20, 40);
 	}
 
 	/**
@@ -194,4 +195,4 @@ public class TicTacTApplet extends JApplet
 		};
 		return paramInfo;
 	}
-} // class TicTacTApplet
+} // class OldTicTacTApplet

@@ -63,15 +63,15 @@ class Group4CellsMaker extends Object {
     boolean hasMorePlaneDiag = true;
     boolean firstDiag = /* for alternating diagonals */ true;
     
-    TicTacTApplet myApplet = null; // is set in constructor so we can send debugMessages somewhere
+    Boss myParentBoss = null; // is set in constructor so we can send debugMessages somewhere
 
      
     /**
     * default constructor
     */
-    public Group4CellsMaker( Board newMyBoard, TicTacTApplet myNewApplet ) {
+    public Group4CellsMaker( Board newMyBoard, Boss myNewParentBoss ) {
         super( );
-        myApplet = myNewApplet;
+        myParentBoss = myNewParentBoss;
         myBoard = newMyBoard;
         currGroup =  new Group4( myBoard );
         /* chooses the first column */
@@ -345,9 +345,9 @@ class Group4CellsMaker extends Object {
                 loopingThrough = X3Y3Z_;
             } else {
                 if ( loopingThrough == X3Y3Z_ ) {
-                    if (myApplet != null) {
-                        myApplet.showDebugInfo("makeNexDiagDiagGroup( ) is working on");
-                        myApplet.showDebugInfo("(3,3, 0) (2,2, 1) (1,1, 2) (0,0, 3)");
+                    if (myParentBoss != null) {
+                        myParentBoss.showDebugInfo("makeNexDiagDiagGroup( ) is working on");
+                        myParentBoss.showDebugInfo("(3,3, 0) (2,2, 1) (1,1, 2) (0,0, 3)");
                     }
                     for ( int newZ = 0; newZ < 4; ++newZ ) {
                         currGroup.theData[newZ].x = 3 - newZ;
@@ -368,8 +368,8 @@ class Group4CellsMaker extends Object {
                             currGroup.theData[newZ].y = newZ;
                             currGroup.theData[newZ].z = newZ;
                         }
-                        if (myApplet != null) {
-                            myApplet.showDebugInfo( currGroup.toString( ) ); // shows a coordinate(s)
+                        if (myParentBoss != null) {
+                            myParentBoss.showDebugInfo( currGroup.toString( ) ); // shows a coordinate(s)
                             // how to see what the specified cells hold??
                         }
                         loopingThrough = ALL_DONE;
@@ -380,8 +380,8 @@ class Group4CellsMaker extends Object {
                             hasMoreGroups = false;
                             hasMoreNonDiag = false;
                             hasMorePlaneDiag = false;
-                            if (myApplet != null) {
-                                myApplet.showDebugInfo("makeNexDiagDiagGroup( ) is done");
+                            if (myParentBoss != null) {
+                                myParentBoss.showDebugInfo("makeNexDiagDiagGroup( ) is done");
                             }
                         }
                     }
