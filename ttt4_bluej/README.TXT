@@ -12,6 +12,7 @@ ps: to open for editing in bluej, double-click the "package.bluej" file.
 USER INSTRUCTIONS: The game continues until no more moves are available
 and the winner is the player with the most 4-in-a-row. Unlike 3x3 tictactoe, this lacks sudden death.
 
+Future Questions: Has this game (or 3x3x3) been solved?
 
 Bugs:
 []Compiler is warning me "Board.java uses unchecked or unsafe operations. 
@@ -39,11 +40,12 @@ which might maybe be stopping at the last (diagdiag) group instead of AFTER it??
 
 
 Plans:
+[ ]Fix Player's toString to have cases, and maybe exceptions for bad values.
 [ ]Replace Board's Vectors with ArrayLists ( could still use vector with type spec, e.g. 
 Vector<String> v = new Vector<String>( );
 add("A");
 
-[ ]We need a new Class that merely holds board data, not the drawing, and the new class needs 
+[x]We have a new Class that merely holds board data, not the drawing, and the new class needs 
 to have a copy constructor for tournaments.
 []Board should notice when game over (no more scoring moves of 4 in a row are available).
 []Teach the AI to build forks or traps.

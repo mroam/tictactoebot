@@ -43,7 +43,7 @@ class Board extends JPanel /* was Canvas*/ {
     */
     public Board( int boardWidth, int boardHeight, Boss newParent ) {
         super( );
-        this.setSize( boardWidth, boardHeight );
+        this.setSize( boardWidth, boardHeight );  // dimensions of the image, NOT saying how many squares in a row
         /* Next line is so we can tell the Boss to repaint score fields  when they change.
         (How else would parent applet know?? */
         parentBoss = newParent; // might be null!
@@ -142,7 +142,7 @@ class Board extends JPanel /* was Canvas*/ {
                 for ( Enumeration e = newHumanWins.elements( ); e.hasMoreElements( );  ) {
                     ((Group4) (e.nextElement( ))).setColor( Color.green );
                 }
-            } catch( FullSquareExc fse ) {
+            } catch( Exception fse ) {  // might be FullSquareExc, BadCellTypeExc
                 System.out.println( "That square is taken-" + fse );
             }
         }
@@ -533,7 +533,7 @@ class Board extends JPanel /* was Canvas*/ {
     /** 
      * Sets the DATA  of the specified cell to blank, X, or O
      */
-    void setCellXorO( int x, int y, int z, int XorO ) throws FullSquareExc {
+    void setCellXorO( int x, int y, int z, int XorO ) throws FullSquareExc, BadCellTypeExc {
     
         if ( theData[x][y][z].getData( ) != Cell.BLANK ) {
             throw new FullSquareExc( "(" + x + "," + y + "," + z + ")" );
@@ -543,7 +543,7 @@ class Board extends JPanel /* was Canvas*/ {
                 theData[x][y][z].setData( XorO );
                 howManyCellsFull++;
                 repaint( );
-            } catch( FullSquareExc fse ) {
+            } catch( Exception fse ) {
                 throw fse;
             }
         }
@@ -553,7 +553,7 @@ class Board extends JPanel /* was Canvas*/ {
     /** 
      *  Sets the DATA  of the specified cell to blank, X, or O 
      */
-    void setCellXorO( CellLoc theLoc, int XorO ) throws FullSquareExc {
+    void setCellXorO( CellLoc theLoc, int XorO ) throws FullSquareExc, BadCellTypeExc {
         setCellXorO( theLoc.x, theLoc.y, theLoc.z, XorO );
     } // setCell( CellLoc, int)
 

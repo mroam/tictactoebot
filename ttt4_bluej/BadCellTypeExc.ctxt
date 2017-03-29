@@ -1,9 +1,6 @@
 #BlueJ class context
-comment0.target=class\ BadCellTypeExc
-comment0.text=\nWrite\ a\ description\ of\ class\ BadCellTypeExc\ here.\n\n@author\ Mike\ Roam\n@version\ rev.\ 6\ Dec\ 2004\n\n
-comment1.params=msg
-comment1.target=BadCellTypeExc(String)
-comment2.target=errMsg
-comment3.params=
-comment3.target=String\ toString()
-numComments=4
+comment0.params=msg
+comment0.target=BadCellTypeExc(java.lang.String)
+comment1.params=
+comment1.target=java.lang.String\ toString()
+numComments=2

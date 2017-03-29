@@ -137,7 +137,7 @@ class OldBoard extends Canvas {
                 for ( Enumeration e = newHumanWins.elements(); e.hasMoreElements();  ) {
                     ((Group4) (e.nextElement())).setColor( Color.green );
                 }
-            } catch( FullSquareExc fse ) {
+            } catch( Exception fse ) {
                 System.out.println( "That square is taken-" + fse );
             }
         }
@@ -524,7 +524,7 @@ class OldBoard extends Canvas {
     /** 
      * Sets the DATA  of the specified cell to blank, X, or O
      */
-    void setCellXorO( int x, int y, int z, int XorO ) throws FullSquareExc {
+    void setCellXorO( int x, int y, int z, int XorO ) throws FullSquareExc, BadCellTypeExc {
     
         if ( theData[x][y][z].getData() != Cell.BLANK ) {
             throw new FullSquareExc( "(" + x + "," + y + "," + z + ")" );
@@ -534,7 +534,7 @@ class OldBoard extends Canvas {
                 theData[x][y][z].setData( XorO );
                 howManyCellsFull++;
                 repaint();
-            } catch( FullSquareExc fse ) {
+            } catch(  BadCellTypeExc fse ) { 
                 throw fse;
             }
         }
@@ -544,7 +544,7 @@ class OldBoard extends Canvas {
     /** 
      *  Sets the DATA  of the specified cell to blank, X, or O 
      */
-    void setCellXorO( CellLoc theLoc, int XorO ) throws FullSquareExc {
+    void setCellXorO( CellLoc theLoc, int XorO ) throws FullSquareExc, BadCellTypeExc {
         setCellXorO( theLoc.x, theLoc.y, theLoc.z, XorO );
     } // setCell( CellLoc, int)
 

@@ -7,7 +7,7 @@
 class BadCellTypeExc extends Exception{
 
 	 BadCellTypeExc( String msg ) {
-		super();
+		super( );
 			errMsg += msg;
 		} // constructor( )
 

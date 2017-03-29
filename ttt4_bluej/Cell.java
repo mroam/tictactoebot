@@ -3,10 +3,14 @@ import java.awt.*;
 /**
  * Cells are the little boxes on the screen. A board is made up of multiple cells.
  * 
+ * These are mostly for drawing, and have a single data to hold (X,O,BLANK).
+ * [ ]This class should get re-named CellView!
+ * 
  * @author (Mike Roam) 
  * @version (Started approx 2000, revised 2002 with Sandy Gifford and Aaron Pellman-Isaacs, revised 2004, 2013, 2016)
  */
 class Cell extends Rectangle {
+    // "Rectangle" have x,y of left upper corner, and width,height dimensions
 
 	 Color myColor = Color.red;
 	 Color myEdgeColor = Color.red;
@@ -64,21 +68,27 @@ class Cell extends Rectangle {
 	} // paint()
 
 
-	 void clearData() {
+	 void clearData( ) {
 		data = BLANK;
 	} // clearData()
 
      /**
-      * only lets empty cells get new values
+      * Only lets empty cells get new values.
+      * Use "clearData( )" instead of setData( ) to blank out a cell!
       * @param newData Either an X or O (int) constant.
       */
-	 void setData( int newData ) throws FullSquareExc {
-		if ( data == BLANK ) {
-			data = newData;
-		}
-		else {
-			throw new FullSquareExc( " " );
-		}
+	 void setData( int newData ) throws FullSquareExc, BadCellTypeExc {
+        if ((newData != X) && (newData != O) && (newData != BLANK)) {
+            throw new BadCellTypeExc( "unknown value '" + Integer.toString(newData) + "'");
+        } else {
+            // okay, legit possibility...
+            if ( data != BLANK ) {
+                // uh-oh, cell is already filled with X or O
+                throw new FullSquareExc( " " );
+            } else {
+                data = newData;
+            }
+        }
 	} // setData()
 
 
