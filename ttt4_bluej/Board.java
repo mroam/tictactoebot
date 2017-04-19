@@ -85,7 +85,7 @@ class Board extends JPanel /* was Canvas*/ {
                             for ( int zLoc = 0; zLoc < 4; ++zLoc ) {
                                 if ( theData[xLoc][yLoc][zLoc].contains( e.getPoint( ) ) ) {
                                     try  {
-                                        registerOpponentMove( new CellLoc( xLoc, yLoc, zLoc ) );
+                                        cellHasBeenClicked( new CellLoc( xLoc, yLoc, zLoc ) );
                                     } catch( BadLocExc blem ) {
                                         System.out.println( "Opponent move not recognized:" + blem );
                                     } 
@@ -105,8 +105,8 @@ class Board extends JPanel /* was Canvas*/ {
     /**
      * This decides how to respond to opponent's move
      */
-     void registerOpponentMove( CellLoc theMoveLoc ) {
-        Debug.debugPrt( "in registerOpponentMove( ), human trying to move to " + theMoveLoc );
+     void cellHasBeenClicked( CellLoc theMoveLoc ) {
+        Debug.debugPrt( "in cellHasBeenClicked( ), human trying to move to " + theMoveLoc );
         CellLoc newComputerMove = null;
         if ( howManyCellsFull < totNumCells ) {
             try  {
@@ -149,7 +149,7 @@ class Board extends JPanel /* was Canvas*/ {
         else {
             Debug.debugPrt( "Board is full, can't register new move " + theMoveLoc );
         }
-    } //registerOpponentMove( )
+    } //cellHasBeenClicked( )
 
 
     /**
@@ -285,7 +285,7 @@ class Board extends JPanel /* was Canvas*/ {
     * 
     * This is almost identical to chooseMoveSmart, except this does not run (AI self-play) tournaments to decide moves.
     * 
-    * This used to be called by registerOpponentMove( ) but now is usually (only?) called by chooseMoveSmart( )
+    * This used to be called by cellHasBeenClicked( ) but now is usually (only?) called by chooseMoveSmart( )
     */
      CellLoc chooseMove( int whoToLookForXorO ) {
         CellLoc theNewMove = null;
@@ -325,7 +325,7 @@ class Board extends JPanel /* was Canvas*/ {
     * maybe we ought to have semi-smart (or time-restricted) moves for tournaments.
     * Perhaps the human moves would be random in our tournament games??
     * 
-    * This is called by registerOpponentMove( )
+    * This is called by cellHasBeenClicked( )
     */
      CellLoc chooseMoveSmart( ) {
         CellLoc theNewMove = null;
