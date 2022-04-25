@@ -1,0 +1,27 @@
+#BlueJ class context
+comment0.params=newLocs\ myNewBoard
+comment0.target=Group4CellsRpt(Group4,\ Board)
+comment0.text=\ \n\ constructor\n
+comment1.params=
+comment1.target=java.lang.String\ toString()
+comment2.params=XorOorB
+comment2.target=int\ howManyXOBs(int)
+comment3.params=newPt3D\ newVal
+comment3.target=void\ addLoc(CellLoc,\ int)
+comment3.text=\n\ put\ another\ cell\ into\ the\ group\ of\ 4,\ if\ there's\ room\n
+comment4.params=newX\ newY\ newZ\ newVal
+comment4.target=void\ addLoc(int,\ int,\ int,\ int)
+comment4.text=\n\ put\ another\ cell\ into\ the\ group\ of\ 4,\ if\ there's\ room\n
+comment5.params=
+comment5.target=boolean[]\ whereXs()
+comment6.params=
+comment6.target=boolean[]\ whereOs()
+comment7.params=
+comment7.target=boolean[]\ whereBlanks()
+comment8.params=XorOorB
+comment8.target=boolean[]\ whereXOBs(int)
+comment8.text=\ \n\ Returns\ an\ array\ telling\ which\ of\ the\ four\ cells\ is\ X\ (or\ O\ or\ BLANK)\n
+comment9.params=XorOorB
+comment9.target=CellLoc[]\ locsOfXOBs(int)
+comment9.text=\n\ returns\ an\ array\ of\ (possibly\ 0)\ \ LOCs\ of\ cells\ that\ are\ X\ (or\ O\ \ or\ BLANK)\n
+numComments=10

@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.params=newMyBoard\ myNewApplet
+comment0.target=Group4CellsMaker(Board,\ TicTacTApplet)
+comment0.text=\n\ default\ constructor\n
+comment1.params=
+comment1.target=Group4\ makeNextGroup()
+comment1.text=\n\ Works\ through\ non-diag\ groups,\ then\ plane\ diags,\ then\ diag-diags\n
+comment2.params=
+comment2.target=void\ startOver()
+comment3.params=
+comment3.target=java.lang.String\ toString()
+comment4.params=
+comment4.target=void\ makeNextNonDiagGroup()
+comment4.text=\n\ Not\ doing\ diagonals,\ so\ can\ loop\ through\ x,y,\ or\ z;\ holding\ 2\ of\ them\ steady\ \n
+comment5.params=
+comment5.target=void\ makeNextPlaneDiagGroup()
+comment5.text=\n\ \n\ Doing\ diagonals\ in\ planes,\ so\ working\ through\ planes\n
+comment6.params=
+comment6.target=void\ makeNextDiagDiagGroup()
+comment6.text=\ \n\ Doing\ the\ 3D\ diagonals,\ of\ which\ there\ only\ four\:\n\ A\:\ (0,0,\ 0)\ (1,1,\ 1)\ (2,2,\ 2)\ (3,3,\ 3)\ \ \ aka\ X_Y_Z_\ \ (means\ x,y,\ and\ z\ count\ 0..3\ )\n\ B\:\ (0,3,\ 0)\ (1,2,\ 1)\ (2,1,\ 2)\ (3,0,\ 3)\ \ \ aka\ X_Y3Z_\ \ (y\ counts\ down\ from\ 3,\ xz\ \=\ 0..3)\n\ C\:\ (3,3,\ 0)\ (2,2,\ 1)\ (1,1,\ 2)\ (0,0,\ 3)\ \ \ aka\ X3Y3Z_\ \ (x\ &\ y\ count\ down\ from\ 3,\ z\ \=\ 0..3)\n\ D\:\ (3,0,\ 0)\ (2,1,\ 1)\ (1,2,\ 2)\ (0,3,\ 3)\ \ \ aka\ X3Y_Z_\ \ (x\ counts\ down\ from\ 3,\ yz\ \=\ 0..3)\n\ \ \ \ \ ^\ This\ last\ one\ was\ missing\n\ Note\:\ we\ always\ loop\ through\ all\ four\ levels,\ counting\ with\ z\=0..3\n\ \n\ This\ builds\ a\ group\ and\ sets\ the\ "loopingThrough"\ flag\ to\ specify\ what\ the\n\ next\ group\ will\ be.\n
+numComments=7

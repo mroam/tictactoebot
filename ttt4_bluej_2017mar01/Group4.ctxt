@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=newMyBoard
+comment0.target=Group4(Board)
+comment1.params=theCellLoc
+comment1.target=boolean\ hasCell(CellLoc)
+comment1.text=Tells\ us\ if\ a\ given\ CellLoc\ is\ in\ this\ Group4's\ list\ of\ locations
+comment2.params=
+comment2.target=java.lang.String\ toString()
+comment3.params=newColor
+comment3.target=void\ setColor(java.awt.Color)
+comment3.text=\ \n\ this\ could\ set\ the\ edge\ color\ of\ all\ the\ cells\ in\ the\ group\ to\ newColor.\n\ this\ could\ set\ all\ the\ cells\ in\ the\ group\ to\ a\ different\ color\n
+numComments=4

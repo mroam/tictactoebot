@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.params=newLeft\ newTop
+comment0.target=Cell(int,\ int)
+comment0.text=\n\ constructor\n
+comment1.params=newColor
+comment1.target=void\ setColor(java.awt.Color)
+comment2.params=g
+comment2.target=void\ paint(java.awt.Graphics)
+comment2.text=\n\ Merely\ draws\ a\ cell\ as\ a\ text\ char\ ('O'\ or\ 'X'\ or\ '_'\ or\ '?')\ at\ position\ specified\ in\ our\ Rectangle's\ .x\ and\ .y\n\ \n
+comment3.params=
+comment3.target=void\ clearData()
+comment4.params=newData
+comment4.target=void\ setData(int)
+comment4.text=\n\ only\ lets\ empty\ cells\ get\ new\ values\n\ @param\ newData\ Either\ an\ X\ or\ O\ (int)\ constant.\n
+comment5.params=
+comment5.target=int\ getData()
+comment6.params=
+comment6.target=java.lang.String\ toString()
+comment7.params=cellValue
+comment7.target=java.lang.String\ toString(int)
+comment7.text=\n\ static\ utility\ function\ that\ lets\ us\ print\ an\ int\ as\ if\ it\ were\ a\ cell\ occupant.\n\ @param\ cellValue\ theoretically\ the\ value\ of\ some\ cell\ ("?"\ will\ be\ returned\ if\ out\ of\ range).\n
+numComments=8

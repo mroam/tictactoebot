@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.params=theNum\ howManyDec
+comment0.target=java.lang.String\ trimDec(double,\ int)
+comment0.text=\ \n\ trims\ off\ extra\ numbers\ (and\ zeros)\ after\ the\ decimal\ point\:\ \ \n\ \ with\ howManyDec\ \=\=\ 2,\ then\ 3.14159\ becomes\ "3.14"\n\ \ NOTE\:\ only\ works\ for\ 0,1,2,\ or\ 3\ places.\n\ \ Note\ 2004\:\ isn't\ there\ a\ numberformat\ thing\ now\ in\ java\ 1.4+?\n
+numComments=1
