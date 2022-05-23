@@ -1,0 +1,24 @@
+#BlueJ class context
+comment0.target=Cell
+comment0.text=\n\ Cells\ are\ the\ little\ boxes\ on\ the\ screen.\ A\ board\ is\ made\ up\ of\ multiple\ cells.\n\ \n\ These\ are\ mostly\ for\ drawing,\ and\ have\ a\ single\ data\ to\ hold\ (X,O,BLANK).\n\ [\ ]This\ class\ should\ get\ re-named\ CellView\!\n\ \n\ @author\ (Mike\ Roam)\ \n\ @version\ (Started\ approx\ 2000,\ revised\ 2002\ with\ Sandy\ Gifford\ and\ Aaron\ Pellman-Isaacs,\ revised\ 2004,\ 2013,\ 2016)\n
+comment1.params=newLeft\ newTop
+comment1.target=Cell(int,\ int)
+comment1.text=\n\ constructor\n
+comment2.params=newColor
+comment2.target=void\ setColor(java.awt.Color)
+comment3.params=g
+comment3.target=void\ paint(java.awt.Graphics)
+comment3.text=\n\ Merely\ draws\ a\ cell\ as\ a\ text\ char\ ('O'\ or\ 'X'\ or\ '_'\ or\ '?')\ at\ position\ specified\ in\ our\ Rectangle's\ .x\ and\ .y\n\ \n
+comment4.params=
+comment4.target=void\ clearData()
+comment5.params=newData
+comment5.target=void\ setData(int)
+comment5.text=\n\ Only\ lets\ empty\ cells\ get\ new\ values.\n\ Use\ "clearData(\ )"\ instead\ of\ setData(\ )\ to\ blank\ out\ a\ cell\!\n\ @param\ newData\ Either\ an\ X\ or\ O\ (int)\ constant.\n
+comment6.params=
+comment6.target=int\ getData()
+comment7.params=
+comment7.target=java.lang.String\ toString()
+comment8.params=cellValue
+comment8.target=java.lang.String\ toString(int)
+comment8.text=\n\ static\ utility\ function\ that\ lets\ us\ print\ an\ int\ as\ if\ it\ were\ a\ cell\ occupant.\n\ @param\ cellValue\ theoretically\ the\ value\ of\ some\ cell\ ("?"\ will\ be\ returned\ if\ out\ of\ range).\n
+numComments=9

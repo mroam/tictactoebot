@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=BoardData
+comment0.text=\n\ BoardData\ keeps\ track\ of\ which\ moves\ (x,o,none)\ are\ in\ which\ squares\ (cells)\ of\ a\ board.\n\ This\ is\ different\ than\ "Board"\ Class\ which\ actually\ draws\ pictures\ of\ a\ Board.\n\ \n\ @author\ Mike\ Roam\n\ @version\ 2017\ Mar\ 29\n
+comment1.params=
+comment1.target=BoardData()
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ BoardData\n
+comment2.params=x\ y\ z\ XorO
+comment2.target=void\ setCellXorO(int,\ int,\ int,\ Player)
+comment2.text=\ \n\ Sets\ the\ DATA\ \ of\ the\ specified\ cell\ to\ blank,\ X,\ or\ O\n
+numComments=3

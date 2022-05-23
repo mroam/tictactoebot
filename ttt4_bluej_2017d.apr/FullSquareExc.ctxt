@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=FullSquareExc
+comment0.text=\n\ Yells\ when\ trying\ to\ change\ an\ already-occupied\ square?\n\ \n\ @author\ Mike\ Roam\n\ @version\ rev.\ 6\ Dec\ 2004\n
+comment1.params=msg
+comment1.target=FullSquareExc(java.lang.String)
+comment2.params=
+comment2.target=java.lang.String\ toString()
+numComments=3

@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=CellLoc
+comment0.text=\n\ Keeps\ track\ of\ the\ 3\ dimensional\ location\ within\ the\ board\ for\ a\ cell.\n\ Throws\ exception\ if\ coordinates\ other\ than\ 0..3\n\ \n\ @author\ Mike\ Roam\n\ @version\ rev.\ 6\ Dec\ 2004\n
+comment1.params=newX\ newY\ newZ
+comment1.target=CellLoc(int,\ int,\ int)
+comment1.text=\n\ constructor\n
+comment2.params=newPt3d
+comment2.target=CellLoc(CellLoc)
+comment3.params=
+comment3.target=CellLoc()
+comment4.params=otherCellLoc
+comment4.target=boolean\ equals(CellLoc)
+comment5.params=
+comment5.target=java.lang.String\ toString()
+numComments=6

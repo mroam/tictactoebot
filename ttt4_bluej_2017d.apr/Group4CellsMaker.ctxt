@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.target=Group4CellsMaker
+comment0.text=\ \n\ This\ class\ creates,\ whenever\ asked,\ the\ next\ of\ the\ 76\ possible\ 4-in-a-row\ group.\n\ First\ come\ all\ columns,\ then\ diagonals\ in\ planes,\ then\ trans-plane\ diagonals.\n\ NOTE\:\ doesn't\ seem\ to\ find\ (at\ least)\ one\ of\ the\ transplane\ diag-diags...\n\ \n\ I'm\ not\ seeing\ how\ to\ run\ the\ applet\ in\ debug,\ but\ the\ trouble\ is\ below,\ in\ \n\ Group4CellsMaker.makeNextDiagDiagGroup(\ )\ \n\ \n3D\ Java\ was\ missing\ human\ score\ (3,0,0)\ \ (2,1,1)\ \ (1,2,2)\ \ (0,3,3)\n\n...X\n....\ \ \ ....\n....\ \ \ ..X.\ \ \ ....\n....\ \ \ ....\ \ \ ....\ \ \ ....\n\ \ \ \ \ \ \ ....\ \ \ .X..\ \ \ ....\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ ....\ \ \ ....\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X...\n\ \n\ \n\ This\ _could_\ merely\ create\ a\ 76\ element\ vector\ of\ \ "Group4"s,\ which\ people\n\ then\ loop\ through\ the\ enumeration\ of,\ which\ would\ be\ perhaps\ more\ thread-safe...\n\ @author\ Mike\ Roam\n\ @version\ rev.\ 6\ Dec\ 2004\n
+comment1.params=newMyBoard\ myNewParentBoss
+comment1.target=Group4CellsMaker(Board,\ Boss)
+comment1.text=\n\ default\ constructor\n
+comment2.params=
+comment2.target=Group4\ makeNextGroup()
+comment2.text=\n\ Works\ through\ non-diag\ groups,\ then\ plane\ diags,\ then\ diag-diags\n\ Hmmm,\ might\ be\ stopping\ before\ the\ very\ last\ diag-diag\n
+comment3.params=
+comment3.target=void\ startOver()
+comment4.params=
+comment4.target=java.lang.String\ toString()
+comment5.params=
+comment5.target=void\ makeNextNonDiagGroup()
+comment5.text=\n\ Not\ doing\ diagonals,\ so\ can\ loop\ through\ x,y,\ or\ z;\ holding\ 2\ of\ them\ steady\ \n
+comment6.params=
+comment6.target=void\ makeNextPlaneDiagGroup()
+comment6.text=\n\ \n\ Doing\ diagonals\ in\ planes,\ so\ working\ through\ planes\n
+comment7.params=
+comment7.target=void\ makeNextDiagDiagGroup()
+comment7.text=\ \n\ Doing\ the\ 3D\ diagonals,\ of\ which\ there\ only\ four\:\n\ A\:\ (0,0,\ 0)\ (1,1,\ 1)\ (2,2,\ 2)\ (3,3,\ 3)\ \ \ aka\ X_Y_Z_\ \ (means\ x,y,\ and\ z\ count\ 0..3\ )\n\ B\:\ (0,3,\ 0)\ (1,2,\ 1)\ (2,1,\ 2)\ (3,0,\ 3)\ \ \ aka\ X_Y3Z_\ \ (y\ counts\ down\ from\ 3,\ xz\ \=\ 0..3)\n\ C\:\ (3,3,\ 0)\ (2,2,\ 1)\ (1,1,\ 2)\ (0,0,\ 3)\ \ \ aka\ X3Y3Z_\ \ (x\ &\ y\ count\ down\ from\ 3,\ z\ \=\ 0..3)\n\ D\:\ (3,0,\ 0)\ (2,1,\ 1)\ (1,2,\ 2)\ (0,3,\ 3)\ \ \ aka\ X3Y_Z_\ \ (x\ counts\ down\ from\ 3,\ yz\ \=\ 0..3)\n\ \ \ \ \ ^\ This\ last\ one\ was\ missing\n\ Note\:\ we\ always\ loop\ through\ all\ four\ levels,\ counting\ with\ z\=0..3\n\ \n\ This\ builds\ a\ group\ and\ sets\ the\ "loopingThrough"\ flag\ to\ specify\ what\ the\n\ next\ group\ will\ be.\n
+numComments=8

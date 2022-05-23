@@ -1,9 +1,0 @@
-#BlueJ class context
-comment0.target=class\ TooManyCellsExc
-comment0.text=\nException\ when\ some\ group\ of\ 4\ actually\ tries\ to\ have\ too\ many\ members.\n\n@author\ Mike\ Roam\n@version\ rev.\ 6\ Dec\ 2004\n\n
-comment1.target=errMsg
-comment2.params=msg
-comment2.target=TooManyCellsExc(String)
-comment3.params=
-comment3.target=String\ toString()
-numComments=4

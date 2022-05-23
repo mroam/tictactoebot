@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=Player
+comment0.text=\n\ Enumeration\ class\ Player\ \ describes\ the\ possible\ pieces\ on\ the\ game\ board.\n\ We\ could\ have\ extra\ kinds\ of\ players\ someday\!\n\ \n\ @author\ Mike\ Roam\n\ @version\ 2017\ Mar\ 29\n
+comment1.params=
+comment1.target=java.lang.String\ toString()
+numComments=2

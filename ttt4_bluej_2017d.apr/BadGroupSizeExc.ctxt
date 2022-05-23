@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=BadGroupSizeExc
+comment0.text=\n\ Complains\ about\ groups\ not\ having\ exactly\ 4\ cells.\n\ \n\ @author\ (Mike\ Roam)\ \n\ @version\ (2016\ oct\ 22)\n
+comment1.params=msg
+comment1.target=BadGroupSizeExc(java.lang.String)
+comment2.params=
+comment2.target=java.lang.String\ toString()
+numComments=3
