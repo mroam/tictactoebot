@@ -1,0 +1,16 @@
+# Ignore Mac system files
+.DS_store
+
+
+# want to exclude compiled stuff? But perhaps keep jars?
+.class
+
+
+# Ignore files related to API keys
+.env
+
+
+# Lots of gitignore info including a global "for all my repos"
+# and implications of initiating ignoring of things that used to be tracked
+# and things that are unwanted in one space getting erased in other spaces!
+# https://stackoverflow.com/questions/19663093/apply-gitignore-on-an-existing-repository-already-tracking-large-number-of-file
