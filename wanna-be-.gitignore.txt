@@ -3,8 +3,13 @@
 
 
 # want to exclude compiled stuff? But perhaps keep jars?
-.class
+*.class
 
+# Log (by who, of what?)
+*.log
+
+# BlueJ files
+*.ctxt
 
 # Ignore files related to API keys
 .env
